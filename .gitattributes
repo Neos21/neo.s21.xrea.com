@@ -1,2 +1,2 @@
 *.md linguist-detectable=true
-README.md	-linguist-detectable
+README.md	linguist-detectable=true
