@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+Allow: /
+Sitemap: http://neo.s21.xrea.com/sitemap.xml
