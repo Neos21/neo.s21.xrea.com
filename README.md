@@ -12,6 +12,8 @@ __メインサイトは GitHub Pages ホスティングを利用し、<https://n
 - <https://ss1.xrea.com/neo.s21.xrea.com/>
   - XREA が提供する「SSL 対応ページ」の URL
   - サイトの HTTPS 化はこのサービスによるモノ
+- <https://neos21.github.io/neo.s21.xrea.com/>
+  - このリポジトリの GitHub Pages
 
 
 ## Author
