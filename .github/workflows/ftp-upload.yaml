@@ -1,0 +1,44 @@
+name: FTP Upload
+on:
+  push:
+    branches:
+      - master
+    workflow_dispatch:
+jobs:
+  ftp-upload:
+    runs-on: ubuntu-latest
+    steps:
+      # https://github.com/actions/checkout
+      - name: Checkout
+        uses: actions/checkout@v4
+      # https://github.com/actions/setup-node
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+      # 変更があったファイルを JSON ファイルに書き出す https://github.com/jitterbit/get-changed-files
+      - name: Get Changed Files
+        id  : get_changed_files
+        uses: jitterbit/get-changed-files@v1
+        with:
+          format: json
+      # プロジェクトルートディレクトリからの相対パス扱いとなる
+      - name: Write Changed Files
+        run : |
+          mkdir -p ./temp/
+          echo '${{ steps.get_changed_files.outputs.added_modified }}' > ./temp/added_modified.json
+          echo '${{ steps.get_changed_files.outputs.renamed }}' > ./temp/renamed.json
+          echo '${{ steps.get_changed_files.outputs.removed }}' > ./temp/removed.json
+          cat ./temp/added_modified.json
+          cat ./temp/renamed.json
+          cat ./temp/removed.json
+      # https://www.npmjs.com/package/ftp-client
+      - name: Setup FTP Client
+        run : |
+          npm install ftp-client@0.2.2
+      # JSON ファイルを基にビルドしてアップロードする
+      - name: Detect And Upload
+        run : |
+          node ./.github/workflows/ftp-upload.js
+        env :
+          FTP_PASSWORD: ${{ secrets.FTP_PASSWORD }}

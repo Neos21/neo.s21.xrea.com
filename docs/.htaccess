@@ -1,0 +1,16 @@
+# Hide .htaccess File
+AddHandler cgi-script htaccess
+
+# No Cache
+<IfModule mod_headers.c>
+  <FilesMatch "¥.(html|css|xml)$">
+    Header set Pragma "no-cache"
+    Header set Cache-Control "no-cache, no-store, must-revalidate"
+    Header set Expires 0
+  </FilesMatch>
+</IfModule>
+
+# Error Redirect
+ErrorDocument 403 /index.html
+ErrorDocument 404 /index.html
+ErrorDocument 500 /index.html
